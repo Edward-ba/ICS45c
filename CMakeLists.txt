@@ -46,7 +46,7 @@ add_executable(${PROJECT_NAME} ${COUNT_SRC_FILES})
 # run your tests. GTest is guaranteed to be installed on
 # OpenLab, but you will need to install it on your own computer
 # for this to build.
-find_package(GTest)
+find_package(GTest REQUIRED)
 if (GTest_FOUND)
     # Knot Tests:
     project(knot_gtests CXX)
@@ -81,6 +81,7 @@ if (GTest_FOUND)
         gtest/gtestmain.cpp
         gtest/stack_gtests.cpp
         src/stack.hpp
+        src/stack.cpp
     )
 
     include_directories(${GTEST_INCLUDE_DIRS})
@@ -91,7 +92,7 @@ if (GTest_FOUND)
     # instead of having to write the cumbersome
     #     #include "../src/foo.hpp"
     target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-    target_link_libraries(${PROJECT_NAME} ${GTEST_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME} ${GTEST_LIBRARIES} )
 
     # Letter Count Tests:
     project(count_gtests CXX)
