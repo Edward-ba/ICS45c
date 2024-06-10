@@ -9,6 +9,6 @@ int main() {
 
     Coins pay_for_chips = pocket.extract_exact_change(coins_required_for_cents(149));
     std::cout << "Bought chips using pocket" << std::endl;
-    std::cout << "Chips required the coins: " << pay_for_chips <<
+    std::cout << "Chips required the coins: " << pay_for_chips << "";
 
 }
