@@ -39,14 +39,14 @@ bool Coins::has_exact_change_for_coins(const Coins& coins) const {
 
 Coins Coins::extract_exact_change(const Coins& coins) {
     if (this->has_exact_change_for_coins(coins)) {
-        return Coins(0, 0, 0, 0);
-    }
-    else {
         this->_quarters -= coins._quarters;
         this->_dimes -= coins._dimes;
         this->_nickles -= coins._nickles;
         this->_pennies -= coins._pennies;
-        return *this;
+        return coins;
+    }
+    else {
+        return Coins(0, 0, 0, 0);
     }
 }
 
@@ -55,12 +55,43 @@ int Coins::total_value_in_cents() const {
 }
 
 void Coins::print(std::ostream& out) const{
-    out << "Quarters: " << this->_quarters << std::endl;
-    out << "Dimes: " << this->_dimes << std::endl;
-    out << "Nickles: " << this->_nickles << std::endl;
-    out << "Pennies: " << this->_quarters << std::endl;
+    out << this->_quarters << " Quarters, ";
+    out << this->_dimes << " Dimes, ";
+    out << this->_nickles << " Nickles, ";
+    out << this->_pennies << " Pennies";
 }
 
-// int main() {
-//     ask_for_coins(std::cin, std::cout);
-// }
+Coins coins_required_for_cents(int amount_in_cents) {
+    int q, d, n, p;
+    q = (int) (amount_in_cents / CENTS_PER_QUARTER);
+    amount_in_cents -= CENTS_PER_QUARTER * q;
+    d = (int) (amount_in_cents / CENTS_PER_DIME);
+    amount_in_cents -= CENTS_PER_DIME * d;
+    n = (int) (amount_in_cents / CENTS_PER_NICKLE);
+    amount_in_cents -= CENTS_PER_NICKLE * n;
+    p = amount_in_cents;
+
+    return Coins (q, d, n, p);
+};
+
+std::ostream& operator<<(std::ostream& out, const Coins& coins) {
+    coins.print(out);
+    return out;
+};
+
+void print_cents(int cents, std::ostream& out) {
+    out << "$" << cents/100.0;
+};
+
+Coins ask_for_coins(std::istream& in, std::ostream& out) {
+    int q, d, n, p;
+    out << "Quarters? ";
+    in >> q;
+    out << "Dime? ";
+    in >> d;
+    out << "Nickle? ";
+    in >> n;
+    out << "Pennies? ";
+    in >> p;
+    return Coins(0,0,0,0);
+};

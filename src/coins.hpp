@@ -21,39 +21,12 @@ private:
     int _quarters, _dimes, _nickles, _pennies;
 };
 
-std::ostream& operator<<(std::ostream& out, const Coins& coins) {
-    coins.print(out);
-    return out;
-};
+std::ostream& operator<<(std::ostream& out, const Coins& coins);
 
-Coins coins_required_for_cents(int amount_in_cents) {
-    int q, d, n, p;
-    q = (int) (amount_in_cents / CENTS_PER_QUARTER);
-    amount_in_cents %= CENTS_PER_QUARTER;
-    d = (int) (amount_in_cents / CENTS_PER_DIME);
-    amount_in_cents %= CENTS_PER_DIME;
-    n = (int) (amount_in_cents / CENTS_PER_NICKLE);
-    amount_in_cents %= CENTS_PER_NICKLE;
-    p = amount_in_cents;
+Coins coins_required_for_cents(int amount_in_cents);
 
-    return Coins(q, d, n, p);
-};
+void print_cents(int cents, std::ostream& out);
 
-void print_cents(int cents, std::ostream& out) {
-    out << "$" << cents/100.0;
-};
-
-Coins ask_for_coins(std::istream& in, std::ostream& out) {
-    int q, d, n, p;
-    out << "Quarters? ";
-    in >> q;
-    out << "Dime? ";
-    in >> d;
-    out << "Nickle? ";
-    in >> n;
-    out << "Pennies? ";
-    in >> p;
-    return Coins(0,0,0,0);
-};
+Coins ask_for_coins(std::istream& in, std::ostream& out);
 
 void coins_menu(std::istream& in, std::ostream& out);
