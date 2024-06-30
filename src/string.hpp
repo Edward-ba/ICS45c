@@ -80,7 +80,6 @@ public:
     static void reverse_cpy(char *dest, const char *src);
     static const char *strchr(const char *str, char c);
     static const char *strstr(const char *haystack, const char *needle);
-
 private:
     char *buf;  // array for the characters in this String
                 // DO NOT add any data members - use the null terminator
