@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "",
             "program": "${workspaceFolder}/build/string_gtests",
-            "args": [],
+            "args": ["--gtest_filter=StringClass.Assignment"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

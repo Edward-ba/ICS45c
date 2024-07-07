@@ -2,20 +2,23 @@
 #include "list.hpp"
 #include <iostream>
 
-String::String(const char *s) {
+String::String(const char *s) 
+: head(nullptr) {
     this->head = list::from_string(s);
 }
 
-String::String(const String &s) {
+String::String(const String &s)
+: head(nullptr) {
     this->head = list::copy(s.head);
+}
+
+String::String(String &&s)
+: head(nullptr) {
+    this->head = s.head;
 }
 
 String::~String() {
     list::free(this->head);
-}
-
-String::String(String &&s) {
-    this->head = s.head;
 }
 
 void String::swap(String &s) {
@@ -23,11 +26,16 @@ void String::swap(String &s) {
 }
 
 String &String::operator=(const String &s) {
-    this->head = list::copy(s.head);
+    if (this->head != s.head) {
+        list::free(this->head);
+        this->head = list::copy(s.head);
+    }
     return *this;
 }
 
 String &String::operator=(String &&s) {
+    if (this->head != nullptr)
+        list::free(this->head);
     this->head = s.head;
     return *this;
 }
@@ -92,11 +100,15 @@ void String::print(std::ostream &out) const {
 }
 
 void String::read(std::istream &in) {
+    if (this->head != nullptr) {
+        list::free(this->head);
+    }
     int len = in.gcount();
     char *buf = new char[len + 2];
     in.read(buf, len);
     buf[len + 1] = '\0';
-    this->head = String(buf).head;
+    this->head = list::from_string(buf);
+    delete[] buf;
 }
 
 std::ostream &operator<<(std::ostream &out, const String &s) {

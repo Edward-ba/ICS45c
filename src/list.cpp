@@ -83,19 +83,8 @@ list::Node* list::reverse(list::Node* head) {
 }
 
 list::Node* list::append(list::Node* lhs, list::Node* rhs) {
-    list::Node* out = new list::Node{lhs->data, nullptr};
-    list::Node *cur = out->next;
-    lhs = lhs->next;
-    while (lhs != nullptr) {
-        cur = new Node{lhs->data, nullptr};
-        lhs = lhs->next;
-        cur = cur->next;
-    }
-    while (rhs != nullptr) { 
-        cur = new Node{rhs->data, nullptr};
-        rhs = rhs->next;
-        cur = cur->next;
-    }
+    list::Node* out = list::copy(lhs);
+    list::last(out)->next = list::copy(rhs);
     return out;
 }
 
