@@ -11,7 +11,6 @@ list::Node *list::from_string(const char *s) {
     for (; s[i] != '\0'; ++i) {
         cur->next = new Node{s[i], nullptr};
         cur = cur->next;
-
     }
     return head;
 }
@@ -19,14 +18,13 @@ list::Node *list::from_string(const char *s) {
 void list::free(list::Node *head) {
     if (head == nullptr)
         return;
-    list::Node *cur = head;
     list::Node *n = head->next;
     while (n != nullptr) {
-        delete cur;
-        cur = n;
-        n = cur->next;
+        delete head;
+        head = n;
+        n = head->next;
     }
-    delete cur;
+    delete head;
 }
 
 void list::print(std::ostream& out, list::Node* head) {
@@ -49,20 +47,20 @@ list::Node* list::copy(list::Node* head) {
     list::Node *cur = out;
     head = head->next;
     while (head != nullptr) {
-        out->next = new Node{head->data, nullptr};
+        cur->next = new Node{head->data, nullptr};
         head = head->next;
-        out = out->next;
+        cur = cur->next;
     }
-    return cur;
+    return out;
 }
 
 
 int list::compare(list::Node* lhs, list::Node* rhs) {
     while (lhs != nullptr && rhs != nullptr) {
-        if (lhs->data == rhs->data) 
-            continue;
-        else
+        if (lhs->data != rhs->data) 
             return lhs->data - rhs->data;
+        lhs = lhs->next;
+        rhs = rhs->next;
     }
     if (lhs == nullptr && rhs == nullptr)
         return 0;
