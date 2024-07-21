@@ -75,11 +75,25 @@ public:
         return this->buf[index];
     }
 
+    const T& operator[](int index) const {
+        if (!in_bounds(index)) {
+            return this->buf[0];
+        }
+        return this->buf[index];
+    }
+
     template <typename Fn>
     void fill_with_fn(Fn fn) {
         int i = 0;
         for (; i < len; ++i) {
             buf[i] = fn;
+        }
+    }
+
+    void fill(T val) {
+        int i = 0;
+        for (; i < this->len; ++i) {
+            buf[i] = val;
         }
     }
 private:

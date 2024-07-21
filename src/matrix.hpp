@@ -17,10 +17,10 @@ public:
         }
     }
     Array<T>& operator[](int row) {
-        return this->data[this->row];
+        return this->data[row];
     }
     const Array<T> &operator[](int row) const {
-        return this->data[this->row];
+        return this->data[row];
     };
 
     int num_rows() const {
